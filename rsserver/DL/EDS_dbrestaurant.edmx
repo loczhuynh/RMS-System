@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbrestaurantModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comp">
+          <Key>
+            <PropertyRef Name="idComp" />
+          </Key>
+          <Property Name="idComp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="idEmployee" Type="int" Nullable="false" />
+          <Property Name="Coupon_Code" Type="varchar" MaxLength="45" />
+          <Property Name="Expiration_Date" Type="date" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="idCustomer" />
+          </Key>
+          <Property Name="idCustomer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Phone#" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Email" Type="varchar" MaxLength="45" />
+          <Property Name="Points" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="idEmployee" />
+          </Key>
+          <Property Name="idEmployee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="idEmployee_Type" Type="int" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee_Type">
+          <Key>
+            <PropertyRef Name="idEmployee_Type" />
+          </Key>
+          <Property Name="idEmployee_Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu_Item">
+          <Key>
+            <PropertyRef Name="idMenu_Item" />
+          </Key>
+          <Property Name="idMenu_Item" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Calories" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Picture" Type="blob" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Category_idCategory" Type="uint" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu_Order">
+          <Key>
+            <PropertyRef Name="idMenu_Order" />
+            <PropertyRef Name="idMenu_Item" />
+          </Key>
+          <Property Name="idMenu_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMenu_Item" Type="int" Nullable="false" />
+          <Property Name="idOrder" Type="int" Nullable="false" />
+          <Property Name="idComp" Type="int" />
+          <Property Name="Request" Type="varchar" MaxLength="45" />
+          <Property Name="Status" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="idOrder" />
+          </Key>
+          <Property Name="idOrder" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Table_idTable" Type="int" />
+          <Property Name="Tax" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="SubTotal" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="Tip" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="Date" Type="date" />
+          <Property Name="idServer" Type="int" />
+          <Property Name="Customer_idCustomer" Type="int" />
+          <Property Name="idChef" Type="int" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="idPayment" />
+            <PropertyRef Name="Order_idOrder" />
+          </Key>
+          <Property Name="idPayment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_idOrder" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="Method" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Customer_idCustomer" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="idTable" />
+          </Key>
+          <Property Name="idTable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="idServer" Type="int" Nullable="false" />
+          <Property Name="Request" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="fk_Menu_Item_Category1">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Menu_Item" Type="Self.Menu_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="Menu_Item">
+              <PropertyRef Name="Category_idCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Menu_Order_Comp1">
+          <End Role="Comp" Type="Self.Comp" Multiplicity="0..1" />
+          <End Role="Menu_Order" Type="Self.Menu_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comp">
+              <PropertyRef Name="idComp" />
+            </Principal>
+            <Dependent Role="Menu_Order">
+              <PropertyRef Name="idComp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Menu_Order_Menu_Item1">
+          <End Role="Menu_Item" Type="Self.Menu_Item" Multiplicity="1" />
+          <End Role="Menu_Order" Type="Self.Menu_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu_Item">
+              <PropertyRef Name="idMenu_Item" />
+            </Principal>
+            <Dependent Role="Menu_Order">
+              <PropertyRef Name="idMenu_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Menu_Order_Order1">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Menu_Order" Type="Self.Menu_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="idOrder" />
+            </Principal>
+            <Dependent Role="Menu_Order">
+              <PropertyRef Name="idOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Order_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Customer_idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Order_Employee1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="idServer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Order_Table1">
+          <End Role="Table" Type="Self.Table" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="idTable" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Table_idTable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Customer_idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Order1">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="idOrder" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Order_idOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Table_Employee1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="idServer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_User_Type1">
+          <End Role="Employee_Type" Type="Self.Employee_Type" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Type">
+              <PropertyRef Name="idEmployee_Type" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="idEmployee_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_User1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Comp" Type="Self.Comp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="Comp">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbrestaurantModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Comp" EntityType="Self.Comp" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Menu_Item" EntityType="Self.Menu_Item" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Menu_Order" EntityType="Self.Menu_Order" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbrestaurant" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbrestaurant" store:Type="Tables" />
+          <AssociationSet Name="fk_Menu_Item_Category1" Association="Self.fk_Menu_Item_Category1">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Menu_Item" EntitySet="Menu_Item" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Menu_Order_Comp1" Association="Self.fk_Menu_Order_Comp1">
+            <End Role="Comp" EntitySet="Comp" />
+            <End Role="Menu_Order" EntitySet="Menu_Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Menu_Order_Menu_Item1" Association="Self.fk_Menu_Order_Menu_Item1">
+            <End Role="Menu_Item" EntitySet="Menu_Item" />
+            <End Role="Menu_Order" EntitySet="Menu_Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Menu_Order_Order1" Association="Self.fk_Menu_Order_Order1">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Menu_Order" EntitySet="Menu_Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Order_Customer1" Association="Self.fk_Order_Customer1">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Order_Employee1" Association="Self.fk_Order_Employee1">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Order_Table1" Association="Self.fk_Order_Table1">
+            <End Role="Table" EntitySet="Table" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Customer1" Association="Self.fk_Payment_Customer1">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Order1" Association="Self.fk_Payment_Order1">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Table_Employee1" Association="Self.fk_Table_Employee1">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Table" EntitySet="Table" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_User_Type1" Association="Self.fk_User_User_Type1">
+            <End Role="Employee_Type" EntitySet="Employee_Type" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_User1" Association="Self.fk_User_User1">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Comp" EntitySet="Comp" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbrestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="idCategory" />
+          </Key>
+          <Property Name="idCategory" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Menu_Item" Relationship="Self.fk_Menu_Item_Category1" FromRole="Category" ToRole="Menu_Item" />
+        </EntityType>
+        <EntityType Name="Comp">
+          <Key>
+            <PropertyRef Name="idComp" />
+          </Key>
+          <Property Name="idComp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="idEmployee" Type="Int32" Nullable="false" />
+          <Property Name="Coupon_Code" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Expiration_Date" Type="DateTime" />
+          <NavigationProperty Name="Menu_Order" Relationship="Self.fk_Menu_Order_Comp1" FromRole="Comp" ToRole="Menu_Order" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_User_User1" FromRole="Comp" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="idCustomer" />
+          </Key>
+          <Property Name="idCustomer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone_" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" />
+          <Property Name="Email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.fk_Order_Customer1" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_Customer1" FromRole="Customer" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="idEmployee" />
+          </Key>
+          <Property Name="idEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idEmployee_Type" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Comps" Relationship="Self.fk_User_User1" FromRole="Employee" ToRole="Comp" />
+          <NavigationProperty Name="Orders" Relationship="Self.fk_Order_Employee1" FromRole="Employee" ToRole="Order" />
+          <NavigationProperty Name="Tables" Relationship="Self.fk_Table_Employee1" FromRole="Employee" ToRole="Table" />
+          <NavigationProperty Name="Employee_Type" Relationship="Self.fk_User_User_Type1" FromRole="Employee" ToRole="Employee_Type" />
+        </EntityType>
+        <EntityType Name="Employee_Type">
+          <Key>
+            <PropertyRef Name="idEmployee_Type" />
+          </Key>
+          <Property Name="idEmployee_Type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.fk_User_User_Type1" FromRole="Employee_Type" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Menu_Item">
+          <Key>
+            <PropertyRef Name="idMenu_Item" />
+          </Key>
+          <Property Name="idMenu_Item" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Calories" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Category_idCategory" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.fk_Menu_Item_Category1" FromRole="Menu_Item" ToRole="Category" />
+          <NavigationProperty Name="Menu_Order" Relationship="Self.fk_Menu_Order_Menu_Item1" FromRole="Menu_Item" ToRole="Menu_Order" />
+        </EntityType>
+        <EntityType Name="Menu_Order">
+          <Key>
+            <PropertyRef Name="idMenu_Order" />
+            <PropertyRef Name="idMenu_Item" />
+          </Key>
+          <Property Name="idMenu_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMenu_Item" Type="Int32" Nullable="false" />
+          <Property Name="idOrder" Type="Int32" Nullable="false" />
+          <Property Name="idComp" Type="Int32" />
+          <Property Name="Request" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Comp" Relationship="Self.fk_Menu_Order_Comp1" FromRole="Menu_Order" ToRole="Comp" />
+          <NavigationProperty Name="Menu_Item" Relationship="Self.fk_Menu_Order_Menu_Item1" FromRole="Menu_Order" ToRole="Menu_Item" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_Menu_Order_Order1" FromRole="Menu_Order" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="idOrder" />
+          </Key>
+          <Property Name="idOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Table_idTable" Type="Int32" />
+          <Property Name="Tax" Type="Decimal" />
+          <Property Name="SubTotal" Type="Decimal" />
+          <Property Name="Tip" Type="Decimal" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="idServer" Type="Int32" />
+          <Property Name="Customer_idCustomer" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.fk_Order_Customer1" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_Order_Employee1" FromRole="Order" ToRole="Employee" />
+          <NavigationProperty Name="Menu_Order" Relationship="Self.fk_Menu_Order_Order1" FromRole="Order" ToRole="Menu_Order" />
+          <NavigationProperty Name="Table" Relationship="Self.fk_Order_Table1" FromRole="Order" ToRole="Table" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_Order1" FromRole="Order" ToRole="Payment" />
+          <Property Name="idChef" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="idPayment" />
+            <PropertyRef Name="Order_idOrder" />
+          </Key>
+          <Property Name="idPayment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_idOrder" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="Method" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_idCustomer" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.fk_Payment_Customer1" FromRole="Payment" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="Self.fk_Payment_Order1" FromRole="Payment" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="idTable" />
+          </Key>
+          <Property Name="idTable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idServer" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_Table_Employee1" FromRole="Table" ToRole="Employee" />
+          <NavigationProperty Name="Orders" Relationship="Self.fk_Order_Table1" FromRole="Table" ToRole="Order" />
+          <Property Name="Request" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="fk_Menu_Item_Category1">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Menu_Item" Type="Self.Menu_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="idCategory" />
+            </Principal>
+            <Dependent Role="Menu_Item">
+              <PropertyRef Name="Category_idCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Menu_Order_Comp1">
+          <End Role="Comp" Type="Self.Comp" Multiplicity="0..1" />
+          <End Role="Menu_Order" Type="Self.Menu_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comp">
+              <PropertyRef Name="idComp" />
+            </Principal>
+            <Dependent Role="Menu_Order">
+              <PropertyRef Name="idComp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_User1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Comp" Type="Self.Comp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="Comp">
+              <PropertyRef Name="idEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Order_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Customer_idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Customer1">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Customer_idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Order_Employee1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="idServer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Table_Employee1">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="idEmployee" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="idServer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_User_Type1">
+          <End Role="Employee_Type" Type="Self.Employee_Type" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Type">
+              <PropertyRef Name="idEmployee_Type" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="idEmployee_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Menu_Order_Menu_Item1">
+          <End Role="Menu_Item" Type="Self.Menu_Item" Multiplicity="1" />
+          <End Role="Menu_Order" Type="Self.Menu_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu_Item">
+              <PropertyRef Name="idMenu_Item" />
+            </Principal>
+            <Dependent Role="Menu_Order">
+              <PropertyRef Name="idMenu_Item" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Menu_Order_Order1">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Menu_Order" Type="Self.Menu_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="idOrder" />
+            </Principal>
+            <Dependent Role="Menu_Order">
+              <PropertyRef Name="idOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Order_Table1">
+          <End Role="Table" Type="Self.Table" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="idTable" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Table_idTable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Order1">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="idOrder" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Order_idOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbrestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Comps" EntityType="Self.Comp" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Employee_Type" EntityType="Self.Employee_Type" />
+          <EntitySet Name="Menu_Item" EntityType="Self.Menu_Item" />
+          <EntitySet Name="Menu_Order" EntityType="Self.Menu_Order" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Tables" EntityType="Self.Table" />
+          <AssociationSet Name="fk_Menu_Item_Category1" Association="Self.fk_Menu_Item_Category1">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Menu_Item" EntitySet="Menu_Item" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Menu_Order_Comp1" Association="Self.fk_Menu_Order_Comp1">
+            <End Role="Comp" EntitySet="Comps" />
+            <End Role="Menu_Order" EntitySet="Menu_Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_User1" Association="Self.fk_User_User1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Comp" EntitySet="Comps" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Order_Customer1" Association="Self.fk_Order_Customer1">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Customer1" Association="Self.fk_Payment_Customer1">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Order_Employee1" Association="Self.fk_Order_Employee1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Table_Employee1" Association="Self.fk_Table_Employee1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Table" EntitySet="Tables" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_User_Type1" Association="Self.fk_User_User_Type1">
+            <End Role="Employee_Type" EntitySet="Employee_Type" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Menu_Order_Menu_Item1" Association="Self.fk_Menu_Order_Menu_Item1">
+            <End Role="Menu_Item" EntitySet="Menu_Item" />
+            <End Role="Menu_Order" EntitySet="Menu_Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Menu_Order_Order1" Association="Self.fk_Menu_Order_Order1">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Menu_Order" EntitySet="Menu_Order" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Order_Table1" Association="Self.fk_Order_Table1">
+            <End Role="Table" EntitySet="Tables" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Order1" Association="Self.fk_Payment_Order1">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+        </EntityContainer>
+ <!--   <Association Name="fk_Order_Customer1">
+          <End Type="dbrestaurantModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="dbrestaurantModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="idCustomer" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Customer_idCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association> -->
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbrestaurantModelStoreContainer" CdmEntityContainer="dbrestaurantEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comps">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Comp">
+              <MappingFragment StoreEntitySet="Comp">
+                <ScalarProperty Name="idComp" ColumnName="idComp" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="Coupon_Code" ColumnName="Coupon_Code" />
+                <ScalarProperty Name="Expiration_Date" ColumnName="Expiration_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="idCustomer" ColumnName="idCustomer" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone_" ColumnName="Phone#" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="idEmployee" ColumnName="idEmployee" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="idEmployee_Type" ColumnName="idEmployee_Type" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Type">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Employee_Type">
+              <MappingFragment StoreEntitySet="Employee_Type">
+                <ScalarProperty Name="idEmployee_Type" ColumnName="idEmployee_Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu_Item">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Menu_Item">
+              <MappingFragment StoreEntitySet="Menu_Item">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="idMenu_Item" ColumnName="idMenu_Item" />
+                <ScalarProperty Name="Calories" ColumnName="Calories" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category_idCategory" ColumnName="Category_idCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu_Order">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Menu_Order">
+              <MappingFragment StoreEntitySet="Menu_Order">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="idMenu_Order" ColumnName="idMenu_Order" />
+                <ScalarProperty Name="idMenu_Item" ColumnName="idMenu_Item" />
+                <ScalarProperty Name="idOrder" ColumnName="idOrder" />
+                <ScalarProperty Name="idComp" ColumnName="idComp" />
+                <ScalarProperty Name="Request" ColumnName="Request" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="idChef" ColumnName="idChef" />
+                <ScalarProperty Name="Customer_idCustomer" ColumnName="Customer_idCustomer" />
+                <ScalarProperty Name="idOrder" ColumnName="idOrder" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Table_idTable" ColumnName="Table_idTable" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="idServer" ColumnName="idServer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="idPayment" ColumnName="idPayment" />
+                <ScalarProperty Name="Order_idOrder" ColumnName="Order_idOrder" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Customer_idCustomer" ColumnName="Customer_idCustomer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="dbrestaurantModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Request" ColumnName="Request" />
+                <ScalarProperty Name="idTable" ColumnName="idTable" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="idServer" ColumnName="idServer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

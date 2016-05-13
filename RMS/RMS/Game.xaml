@@ -1,0 +1,85 @@
+﻿<Window x:Class="RMS.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RMS.UI"
+        mc:Ignorable="d" 
+        d:DesignHeight="720" d:DesignWidth="1280"
+        MaxHeight="758" MaxWidth="1280" MinHeight="758" MinWidth="1280"
+        Title="RMS">
+    <!-- ^^38 vertical pixels are lost to the Title Bar. We won't have to
+         worry about that since our application will be full screen. -->
+    <!-- Container for all elements -->
+    <Grid Name="gameRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="624"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="232"/>
+            <ColumnDefinition Width="24"/>
+            <ColumnDefinition Width="1024"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Fixed Menu -->
+        <Grid Name="gameFixedMenuRoot" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+            </Grid.ColumnDefinitions>
+            <Label Name="gameStatusBarL0" Grid.Column="0" Content="Social Media" Style="{DynamicResource fixedMenu}"/>
+            <Label Name="gameStatusBarL1" Grid.Column="1" Content="Games" Style="{DynamicResource fixedMenu}"/>
+            <Label Name="gameStatusBarL2" Grid.Column="2" Content="Menu" Style="{DynamicResource fixedMenu}"/>
+            <Label Name="gameStatusBarL3" Grid.Column="3" Content="Assistance" Style="{DynamicResource fixedMenu}"/>
+            <Label Name="gameStatusBarL4" Grid.Column="4" Content="Refill" Style="{DynamicResource fixedMenu}"/>
+        </Grid>
+
+        <!-- Side Panel -->
+        <Grid Name="gameSidePanelRoot" Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="78"/>
+                <RowDefinition Height="78"/>
+                <RowDefinition Height="390"/>
+                <RowDefinition Height="78"/>
+            </Grid.RowDefinitions>
+            <TextBox Name="gameSidePanelT0" Grid.Row="0" Text="Enter Your User Name!" />
+            <Label Name="gameSidePanelL0" Grid.Row="0" IsEnabled="False" Visibility="Hidden"
+                   Style="{DynamicResource sidePanel}"/>
+            <Label Name="gameSidePanelL1" Grid.Row="1" Content="Log In" Style="{DynamicResource sidePanel}"
+                   MouseDown="gameSidePanelL1_MouseDown"/>
+            <Button Name="gameSidePanelL2" Grid.Row="2" Content="Dynamic Information"/>
+            <Grid Name="gameSideContextSwitch" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="116"/>
+                    <ColumnDefinition Width="116"/>
+                </Grid.ColumnDefinitions>
+                <Label Name="gameSideContextL0" Grid.Column="0" Content="Back" Style="{DynamicResource sidePanel}"/>
+                <Label Name="gameSideContextL1" Grid.Column="1" Content="Next" Style="{DynamicResource sidePanel}"/>
+            </Grid>
+        </Grid>
+
+        <!-- Separator -->
+        <Line Name="gameSeparator" Grid.Row="2" Grid.Column="1" Y1="48"
+              Y2="576" Stroke="Black" StrokeThickness="5"
+              HorizontalAlignment="Center"/>
+
+        <!-- Main View -->
+        <Grid Name="gameMainViewRoot" Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="269"/>
+                <RowDefinition Height="6"/>
+                <RowDefinition Height="272"/>
+                <!--546-->
+                <RowDefinition Height="78"/>
+                <!--78-->
+            </Grid.RowDefinitions>
+            <WebBrowser x:Name="GameTest" HorizontalAlignment="Left" Source="http://chat.kongregate.com/gamez/0015/1730/live/Preloader.swf?kongregate_game_version=1438732359" Margin="0,0,0,269"/>
+            <Button Name="gameMainViewL1" Grid.Row="3" Content="Place1"/>
+        </Grid>
+    </Grid>
+</Window>

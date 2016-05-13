@@ -1,0 +1,499 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RMS.UI.View"       
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+        xmlns:app="clr-namespace:RMS.UI"
+        x:Name="rootWindow" x:Class="RMS.UI.View.CMainWindow"
+        mc:Ignorable="d" 
+        MaxHeight="758" MaxWidth="1280" MinHeight="758" MinWidth="1280"
+        Title="RMS" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <!-- ^^38 vertical pixels are lost to the Title Bar. We won't have to
+         worry about that since our application will be full screen. -->
+    <Window.Resources>
+        <local:CaloriesConverter x:Key="myCaloriesConverter"/>
+    </Window.Resources>
+
+    <!-- Container for all elements -->
+    <Grid Name="rootWindowGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="22*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="41*"/>
+        </Grid.ColumnDefinitions>
+
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3">
+            <!-- Social Media tab-->
+            <TabItem Header="Social Media" Style="{StaticResource tabDimensions}">
+                <TabItem.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FF13437F" Offset="1"/>
+                    </RadialGradientBrush>
+                </TabItem.Background>
+                <Grid Name="socialMediaGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".004*"/>
+                        <RowDefinition Height=".001*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="41*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Name="socialMediaUIGrid" Grid.Column="2" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Name="twitterMessage" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Grid.Column="1" Grid.Row="1" Text="Write your tweet here"
+                                 Height="150" Width="300" TextWrapping="Wrap" Margin="10,0,0,0"/>
+                        <Button Name="twitterButton" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="2" Content="Tweet about your experience!"
+                                Height="75" Width="300" Click="TwitterButton_Click"/>
+                        <WebBrowser Name="twitterBrowser" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                    Grid.Column="1" Grid.Row="1"
+                                    Height="200" Width="400" IsEnabled="False" Visibility="Hidden"/>
+                        <Label Name="twitterPinLabel" HorizontalAlignment="Right" VerticalAlignment="Center"
+                               Grid.Column="0" Grid.Row="2" Content="Please enter the PIN here:"
+                               Height="24" Width="150" Visibility="Hidden"/>
+                        <PasswordBox Name="twitterPinPassword" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     Grid.Column="1" Grid.Row="2" PasswordChar="*"
+                                     Height="20" Width="300" IsEnabled="False" Visibility="Hidden"/>
+                        <Button Name="twitterPinDone" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Grid.Column="2" Grid.Row="2" Content="Next" Margin="0,8,0,7"
+                                Height="25" Width="150" Click="TwitterPinDone_Click" Visibility="Hidden"
+                                IsEnabled="False"/>
+                        <Label Name="twitterThanksLabel" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Grid.Column="1" Grid.Row="1" Content="Thanks for the tweet!"
+                               Height="40" Width="300" Visibility="Hidden"/>
+                    </Grid>
+                    <!-- Really here to stretch the grid as needed -->
+                    <Button Name="backButtonSocialMedia" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                            Grid.Row="2" Grid.Column="2" Content="Back"
+                            Height="48" Width="138" IsEnabled="False" Click="BackButtonSocialMedia_Click"/>
+                </Grid>
+            </TabItem>
+
+            <!-- Assistance tab -->
+            <TabItem Header="Assistance" Style="{StaticResource tabDimensions}">
+                <TabItem.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FF13437F" Offset="1"/>
+                    </RadialGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".004*"/>
+                        <RowDefinition Height=".001*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="41*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                </Grid>
+            </TabItem>
+
+            <!-- Menu tab -->
+            <TabItem Name="tabMenu" Header="Menu" Style="{StaticResource tabDimensions}">
+                <TabItem.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FF13437F" Offset="1"/>
+                    </RadialGradientBrush>
+                </TabItem.Background>
+
+                    
+                <Grid Name="menuGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".004*"/>
+                        <RowDefinition Height=".001*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="241*"/>
+                        <ColumnDefinition Width="241*"/>
+                        <ColumnDefinition Width="241*"/>
+                        <ColumnDefinition Width="241*"/>
+                        <ColumnDefinition Width="241*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Name="menuUIGrid" Grid.Column="2" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="6*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="241*"/>
+                            <ColumnDefinition Width="241*"/>
+                            <ColumnDefinition Width="241*"/>
+                            <ColumnDefinition Width="241*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Food menu headers -->
+                        <Label Name="entreeButton" Content="Entrees" HorizontalAlignment="Center"
+                               Grid.Column="0" Grid.Row="0" BorderThickness="2"
+                               VerticalAlignment="Bottom"/>
+                        <Label Name="appetizerButton" Content="Drinks" HorizontalAlignment="Center"
+                                Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom"/>
+                        <Label Name="drinksButton" Content="Appetizers" HorizontalAlignment="Center"
+                                Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom"/>
+                        <Label Name="dessertButton" Content="Desserts" HorizontalAlignment="Center"
+                                Grid.Column="3" Grid.Row="0" VerticalAlignment="Bottom"/>
+
+                         <!-- Food Menus -->
+                        <ListView Name="entreeMenu" ItemsSource="{Binding EntreeMenuList}"
+                                  Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Click="FoodMenuItem_Click" Width="230" Height="100"
+                                                Background="YellowGreen">
+                                            <Grid Name = "ButtonGrid">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Name="foodName" Text="{Binding name}"
+                                                           Grid.Row="0" TextAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Name="calories"
+                                                           Text="{Binding Path=Text, ElementName=tmp, Converter={StaticResource myCaloriesConverter}}"
+                                                           TextAlignment="Center" Grid.Row="1" TextWrapping="Wrap"/>
+                                                <TextBlock Name="tmp" Text="{Binding calories}"
+                                                           Grid.Row="1" Visibility="Hidden" TextWrapping="Wrap"/>
+                                                <TextBlock Name="foodPrice" Text="{Binding price, StringFormat=c}"
+                                                           Grid.Row="2" TextAlignment="Center" TextWrapping="Wrap"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView Name="appetizerMenu" ItemsSource="{Binding AppetizerMenuList}"
+                                  Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom">
+                            <ListView.ItemTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Click="FoodMenuItem_Click" Width="230"
+                                                Height="100" Background="YellowGreen">
+                                            <Grid Name = "ButtonGrid">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Name="foodName" Text="{Binding name}"
+                                                           Grid.Row="0" TextAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Name="calories"
+                                                           Text="{Binding Path=Text, ElementName=tmp, Converter={StaticResource myCaloriesConverter}}"
+                                                           TextAlignment="Center" Grid.Row="1" TextWrapping="Wrap"/>
+                                                <TextBlock Name="tmp" Text="{Binding calories}"
+                                                           Grid.Row="1" Visibility="Hidden" TextWrapping="Wrap"/>
+                                                <TextBlock Name="foodPrice" Text="{Binding price, StringFormat=c}"
+                                                           Grid.Row="2" TextAlignment="Center" TextWrapping="Wrap"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView Name="drinksMenu" ItemsSource="{Binding DrinksMenuList}"
+                                  Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom">
+                            <ListView.ItemTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Click="FoodMenuItem_Click" Width="230" Height="100"
+                                                Background="YellowGreen">
+                                            <Grid Name = "ButtonGrid">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Name="foodName" Text="{Binding name}"
+                                                           Grid.Row="0" TextAlignment="Center" TextWrapping="Wrap"/>
+                                                <TextBlock Name="calories" Text="{Binding Path=Text, ElementName=tmp, Converter={StaticResource myCaloriesConverter}}"
+                                                           TextAlignment="Center" Grid.Row="1" TextWrapping="Wrap"/>
+                                                <TextBlock Name="tmp" Text="{Binding calories}"
+                                                           Grid.Row="1" Visibility="Hidden" TextWrapping="Wrap"/>
+                                                <TextBlock Name="foodPrice" Text="{Binding price, StringFormat=c}"
+                                                           Grid.Row="2" TextAlignment="Center" TextWrapping="Wrap"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView Name="dessertMenu" ItemsSource="{Binding DessertMenuList}"
+                                  Grid.Column="3" Grid.Row="2" VerticalAlignment="Bottom">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <Button Click="FoodMenuItem_Click" Width="230" Height="100"
+                                                Background="YellowGreen">
+                                            <Grid Name = "ButtonGrid">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Name="foodName" Text="{Binding name}"
+                                                           Grid.Row="0" TextAlignment="Center"/>
+                                                <TextBlock Name="calories"
+                                                           Text="{Binding Path=Text, ElementName=tmp, Converter={StaticResource myCaloriesConverter}}"
+                                                           TextAlignment="Center" Grid.Row="1"/>
+                                                <TextBlock Name="tmp" Text="{Binding calories}"
+                                                           Grid.Row="1" Visibility="Hidden"/>
+                                                <TextBlock Name="foodPrice" Text="{Binding price, StringFormat=c}"
+                                                           Grid.Row="2" TextAlignment="Center"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <!-- Games tab -->
+            <TabItem Header="Games" Style="{StaticResource tabDimensions}">
+                <TabItem.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FF13437F" Offset="1"/>
+                    </RadialGradientBrush>
+                </TabItem.Background>
+                <Grid Name="gameGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".004*"/>
+                        <RowDefinition Height=".001*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="41*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Create another grid to easily group ui elements -->
+                    <Grid Name="gameUIGrid" Grid.Row="2" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Base Game UI -->
+                        <Button x:Name="BloonsButton" Content="Electric Box" Grid.Column="0" Grid.Row="0"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="150"
+                                Click="GameSelect_Click"/>
+                        <Button x:Name="BloonsTDButton" Content="Bloons Tower Defense" Grid.Column="1" Grid.Row="0"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="150"
+                                Click="GameSelect_Click"/>
+                        <Button x:Name="BejeweledButton" Content="Flappy Bird" Grid.Column="2" Grid.Row="0"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="150"
+                                Click="GameSelect_Click"/>
+                        <Button x:Name="TicTacToeButton" Content="Tic-Tac-Toe" Grid.Column="0" Grid.Row="1"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="150"
+                                Click="GameSelect_Click"/>
+
+                        <!-- Don't know and the browser for the games -->
+                        <Button x:Name="LinesButton" Content="Lines" Grid.Column="1" Grid.Row="1"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="150"
+                                Click="GameSelect_Click" Visibility="Hidden" IsEnabled="False"/>
+                        <WebBrowser x:Name="WebGameBrowser" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                                    Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Source="{x:Null}" Visibility="Hidden" IsEnabled="False"/>
+
+                        <!-- Tic Tac Toe Game Buttons -->
+                        <Button x:Name="TTTTL" Content="" Grid.Column="0" Grid.Row="0"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTTL_Click"/>
+                        <Button x:Name="TTTTM" Content="" Grid.Column="1" Grid.Row="0"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTTM_Click"/>
+                        <Button x:Name="TTTTR" Content="" Grid.Column="2" Grid.Row="0"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTTR_Click"/>
+                        <Button x:Name="TTTML" Content="" Grid.Column="0" Grid.Row="1"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTML_Click"/>
+                        <Button x:Name="TTTMM" Content="" Grid.Column="1" Grid.Row="1"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTMM_Click"/>
+                        <Button x:Name="TTTMR" Content="" Grid.Column="2" Grid.Row="1"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTMR_Click"/>
+                        <Button x:Name="TTTBL" Content="" Grid.Column="0" Grid.Row="2"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTBL_Click"/>
+                        <Button x:Name="TTTBM" Content="" Grid.Column="1" Grid.Row="2"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTBM_Click"/>
+                        <Button x:Name="TTTBR" Content="" Grid.Column="2" Grid.Row="2"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"
+                                IsEnabled="False" Click="TTTBR_Click"/>
+                        <!-- Tic Tac Toe End Game Screen -->
+                        <Label Name="couponCodeLabel" Content="Congratulations! Your coupon code is: "
+                               Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Visibility="Hidden"/>
+                        <Button Name="endGameReplay" Content="Replay" Grid.Column="0" Grid.Row="2"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"
+                                IsEnabled="false" Click="ReplayGame_Click"/>
+                    </Grid>
+
+                    <!-- Include a back button so they can play other games -->
+                    <Button Name="backButtonGame" Content="Back" Grid.Row="3" Grid.Column="0"
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="48" Width="138"
+                            IsEnabled="False" Click="BackButtonGame_Click"/>
+                </Grid>
+            </TabItem>
+
+            <!-- Refill tab -->
+            <TabItem Header="Refill" Style="{StaticResource tabDimensions}">
+                <TabItem.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FF13437F" Offset="1"/>
+                    </RadialGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".004*"/>
+                        <RowDefinition Height=".001*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="41*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Name="refillMenu" ItemsSource="{Binding DrinksInOrder}" Grid.Row="2" Grid.Column="2"
+                              Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+                              VerticalAlignment="Center" AutoGenerateColumns="False" Width="300">
+                        <DataGridTemplateColumn Header="Drink" Width="150" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label DataContext="{Binding name}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Price" Width="150" IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label DataContext="{Binding price}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Static sidebar -->
+        <Grid Name="staticSideBar" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+              Margin="5,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.125*"/>
+                <RowDefinition Height="0.125*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.125*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Name="staticSideBarLoginGrid" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                </Grid.RowDefinitions>
+
+                <TextBox Name="phoneBox" Text="{Binding UiPhoneNumber}" Grid.Row="0"/>
+                <TextBox Name="passwordBox" Text="{Binding UiPassword}" Grid.Row="1"/>
+            </Grid>
+            <Label Name="usernameLabel" Content="{Binding CurrentUser}" Grid.Row="0" Visibility="Hidden"
+                   IsEnabled="False"/>
+            <Button Name="loginButton" Content="Login" Grid.Row="1" Command="{Binding CheckLogin}"
+                    Click="login_Click"/>
+
+            <StackPanel Grid.Row="2" Background="White">
+                <DataGrid Name="gridCustomerOrder" AutoGenerateColumns="False" AlternatingRowBackground="GreenYellow" 
+                          AlternationCount="2" CanUserAddRows="false" ColumnWidth="*"
+                          ItemsSource="{Binding CustomerOrder}" Height="318"
+                          MouseDoubleClick="gridCustomerOrder_MouseDoubleClick">
+                    <DataGrid.Columns >
+                        <DataGridTemplateColumn Header="Item Name" IsReadOnly="True" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ItemName}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Price" IsReadOnly="True" Width="0.25*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Price, StringFormat=c}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Name="txtTotalPrice" TextAlignment="Left"
+                           Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" FontWeight="Bold"
+                           Text="Total Price:"/>
+                <TextBlock Name="txtTax" TextAlignment="Left"
+                           Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" FontWeight="Bold"
+                           Text="Tax:"/>
+                <TextBlock Name="txtSubTotal" TextAlignment="Left"
+                           Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" FontWeight="Bold"
+                           Text="Subtotal:"/>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Name="btnRemove" Content="Remove" Grid.Row="0" Grid.Column="0" Margin="0,5,5,5"
+                            Background="LightYellow" Height="40" Click="btnRemove_Click"/>
+                    <Button Name="btnSubmitOrder" Content="Submit Order" Grid.Row="1" Grid.Column="0"
+                            Margin="0,5,5,0" Background="LightYellow" Height="40" Click="btnSubmitOrder_Click"/>
+                    <Button Name="btnCheckOutOrder" Content="Checkout Order" Grid.Row="1" Grid.Column="1"
+                            Margin="5,5,0,0" Background="LightYellow" Height="40" Click="btnCheckOutOrder_Click"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

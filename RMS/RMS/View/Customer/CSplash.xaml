@@ -1,0 +1,61 @@
+﻿<Window x:Class="RMS.UI.View.Splash"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RMS.UI.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      MaxHeight="758" MaxWidth="1280" MinHeight="758" MinWidth="1280"
+      Title="Splash">
+    <Grid Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="656"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="427"/>
+            <ColumnDefinition Width="427"/>
+            <ColumnDefinition Width="427"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Fixed Menu -->
+        <Grid Name="fixedMenuRoot" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+                <ColumnDefinition Width="256"/>
+            </Grid.ColumnDefinitions>
+            <Label Name="statusBarL0" Grid.Column="0" Content="Social Media" Style="{StaticResource fixedMenu}"/>
+            <Label Name="statusBarL1" Grid.Column="1" Content="Games" Style="{StaticResource fixedMenu}"/>
+            <Button Name="statusBarB2" Grid.Column="2" Content="Menu"/>
+            <Label Name="statusBarL3" Grid.Column="3" Content="Assistance" Style="{StaticResource fixedMenu}"/>
+            <Label Name="statusBarL4" Grid.Column="4" Content="Refill" Style="{StaticResource fixedMenu}"/>
+        </Grid>
+
+        <!-- Content Pane -->
+        <Grid Name="splashContentRoot" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="578"/>
+                <RowDefinition Height="78"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Image Name="splashImage" Grid.Row="0" Height="656" Width="1280" Grid.RowSpan="2"
+                   Source="C:\MyDocuments\Personal\University\UNT\Fall2015\CSCE4444\SoftwareDev\SoftwareDev\Source\RMS\Images\splash.png" Stretch="UniformToFill"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="3">
+            </Image>
+<!--            <Button Name="testButton" Grid.Row="1" Grid.Column="0" Content="Click me!"
+                    Click="dataBindingButton_Click"/> -->
+            <Label Name="splashRewardsL" Grid.Row="1" Grid.Column="1" Content="Rewards Program"
+                   Background="White" Style="{StaticResource fixedMenu}"/>
+<!--            <Label Name="testLabel" Grid.Row="1" Grid.Column="2" Content="{}"/> -->
+        </Grid>
+    </Grid>
+</Window>

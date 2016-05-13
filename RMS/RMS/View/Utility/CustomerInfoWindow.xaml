@@ -1,0 +1,15 @@
+﻿<Window x:Class="RMS.UI.View.Utility.CustomerInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Customer Email"  Height="700.374" Width="490.402" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,6.8">
+        <TextBlock Name ="txtReceiptHeader"  Text="Receipt Area" TextAlignment="Center" Margin="10,10,10,243.2"/>
+        <TextBlock Name ="txtReceipt" Text="---------------------------------------------------------------------------------------------------------------" 
+                   TextAlignment="Center" Margin="10,30,10,243.2"/>
+
+        <TextBlock Text="Enter Email:" TextAlignment="Justify" Margin="23,512,362,125.8"></TextBlock>
+        <TextBox Name="txtEmail" Margin="108,512,88,112.6" ></TextBox>
+        <Button Name="btnDone" Content="Email Receipt" Margin="108,570,246,41.6" Click="btnDone_Click"></Button>
+        <Button Name="btnClose" Content="Close" Margin="258,570,107,41.6" Click="btnClose_Click" ></Button>
+    </Grid>
+</Window>

@@ -1,0 +1,10 @@
+﻿<Window x:Class="RMS.UI.View.Utility.CustomerOrderRequestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Customer Special Request" Height="237.771" Width="501.548" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <TextBlock Text="Enter Special Request:" Margin="55,20,65.2,0"></TextBlock>
+        <TextBox Name="txtSpecialRequest" Height="74" Margin="55,10,65.2,0" ></TextBox>
+        <Button Name="btnSubmit" Content="Submit" Margin="356,20,65.2,0" Click="btnSubmit_Click"></Button>
+    </StackPanel>
+</Window>

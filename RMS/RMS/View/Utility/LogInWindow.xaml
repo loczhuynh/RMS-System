@@ -1,0 +1,13 @@
+﻿<Window x:Class="RMS.UI.View.Utility.LogInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Log In Window" Height="235.914" Width="507.121" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock Text="Enter User Name:" Margin="23,25,355.8,151.4" TextAlignment="Right"></TextBlock>
+        <TextBox Name="txtUserName" Margin="166,15,75.8,151.4"></TextBox>
+        <TextBlock Text="Enter Password:" Margin="13,77,355.8,93.4" TextAlignment="Right"></TextBlock>
+        <PasswordBox Name="txtPassword" Margin="166,77,75.8,89.4" PasswordChar="*" ></PasswordBox>
+        <Button Name="btnOK" Content="OK" Margin="125,139,258.8,20.4" Click="btnOK_Click"></Button>
+        <Button Name="btnCancel" Content="Cancel" Margin="267,139,116.8,20.4" Click="btnCancel_Click"></Button>
+    </Grid>
+</Window>

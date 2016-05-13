@@ -1,0 +1,8 @@
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\bin\Debug\RMS.Server.exe.config
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\bin\Debug\RMS.Server.exe
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\bin\Debug\RMS.Server.pdb
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\bin\Debug\EntityFramework.dll
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\bin\Debug\EntityFramework.xml
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\obj\Debug\RMS.Server.csprojResolveAssemblyReference.cache
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\obj\Debug\RMS.Server.exe
+C:\MyDocuments\Personal\University\UNT\Fall2015\SoftwareDev\Source\rsserver\obj\Debug\RMS.Server.pdb

@@ -1,0 +1,41 @@
+﻿<Application x:Class="RMS.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RMS.UI">
+    <Application.Resources>
+        <!-- General Dimensions -->
+        <Style TargetType="ContentControl" x:Key="tabDimensions">
+            <Setter Property="Height" Value="64"/>
+            <!-- Lose 20 pixels to the borders! -->
+            <Setter Property="Width" Value="252"/>
+        </Style>
+        <Style TargetType="ContentControl" x:Key="sidePanelDimensions">
+            <Setter Property="Height" Value="78"/>
+            <Setter Property="Width" Value="232"/>
+        </Style>
+        <!-- Styles related to Tabs -->
+        <Style TargetType="TabItem" x:Key="tabItemRoot" BasedOn="{StaticResource tabDimensions}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style TargetType="TabItem" x:Key="fixedMenu" BasedOn="{StaticResource tabItemRoot}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style TargetType="TabItem" x:Key="sidePanel" BasedOn="{StaticResource labelRoot}">
+            <Setter Property="Height" Value="78"/>
+            <Setter Property="Width" Value="232"/>
+        </Style>
+        <!-- Styles related to Grids -->
+    </Application.Resources>
+</Application>
